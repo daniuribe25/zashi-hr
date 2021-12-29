@@ -1,5 +1,7 @@
 defmodule ZashiHRWeb.Graphql.Resolvers.Users do
   alias ZashiHR.Services.Users, as: UsersServices
+  alias ZashiHR.Services.AppSettings, as: AppSettingsServices
+  alias ZashiHR.Models.Users.User
   alias ZashiHR.Middlewares.Guardian
 
   def list(_parent, args, _info) do
@@ -15,7 +17,7 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Users do
 
   def create(%{user: attrs}, _info) do
     with {:ok, user} <- UsersServices.create(attrs),
-    {:ok, token, _} = ZashiHR.Services.Sessions.generate_invitation_token(user, :common) do
+    {:ok, token, _} <- ZashiHR.Services.Sessions.generate_invitation_token(user, :common) do
         ZashiHR.MailClient.send_invitation_link("dani.uribe25@gmail.com", token)
         {:ok, user}
     else
@@ -24,8 +26,31 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Users do
     end
   end
 
-  def is_user_invitation_valid(%{token: token}, _info) do
+  def send_user_invitation(%{email: email}, _info) do
+    with %User{} = user <- UsersServices.get_by_email(email),
+         {:ok, %User{} = updated_user} <- UsersServices.update(user, %{ last_invitation_at: NaiveDateTime.local_now() }),
+         {:ok, token, _} <- ZashiHR.Services.Sessions.generate_invitation_token(updated_user, :common),
+         %Bamboo.Email{} = _ = ZashiHR.MailClient.send_invitation_link("dani.uribe25@gmail.com", token) do
+          {:ok, updated_user}
+      else
+        {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
+        _ -> {:error, "Unknown"}
+      end
+  end
 
+  def is_user_invitation_valid(%{token: token}, _info) do
+    with {:ok, claims} <- Guardian.decode_and_verify(token),
+      {:ok, user} <- Guardian.resource_from_claims(claims),
+        %{ value: value } <- AppSettingsServices.get_by_name("user_invitation_expires_after") do
+        seconds = String.to_integer(value) * 60
+        {
+          :ok,
+          NaiveDateTime.compare(NaiveDateTime.add(user.last_invitation_at, seconds), NaiveDateTime.local_now()) == :gt
+        }
+      else
+        {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
+        _ -> {:error, "Unknown"}
+      end
   end
 
   def set_user_password(%{user: attrs}, _info) do
@@ -41,6 +66,19 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Users do
       end
     else
       {:error, "passwords don't match"}
+    end
+  end
+
+  def update(%{user: user}, %{ context: context }) do
+    %{ id: id, role: role } = context.current_user
+    with true <- Map.has_key?(context, :current_user),
+        true <- (role == "common" && Integer.to_string(id) == user.id) || Enum.member?(["admin", "super_admin"], role),
+        {:ok, %User{} = updated_user} <- UsersServices.get(user.id) |> UsersServices.update(Map.delete(user, :id)) do
+      {:ok, updated_user}
+    else
+      {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
+      false -> {:error, "Unauthorized"}
+       _ -> {:error, "Unknown"}
     end
   end
 end

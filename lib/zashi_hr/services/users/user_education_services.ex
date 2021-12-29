@@ -9,7 +9,7 @@ defmodule ZashiHR.Services.UserEducations do
   alias ZashiHR.Services.Helpers.{Queries, OrderBy, Pagination}
 
   def list_by_filter(filter, order_by, pagination) do
-    query = from ued in UserEducation, as: :user_education, where: ued.active == true
+    query = from ued in UserEducation, as: :user_education
     date_list = [:from, :to]
     query = Queries.filter_search(:user_education, filter, query, date_list, [], :and)
     query = OrderBy.sort(order_by, query)

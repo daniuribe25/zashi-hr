@@ -21,6 +21,8 @@ defmodule ZashiHR.Services.AppSettings do
 
   def get(id), do: Repo.get(AppSettingsModel, id)
 
+  def get_by_name(name), do: Repo.get_by(AppSettingsModel, name: name)
+
   def create(attrs \\ %{}) do
     %AppSettingsModel{}
     |> Ecto.Changeset.change(attrs)

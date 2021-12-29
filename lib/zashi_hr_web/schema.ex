@@ -26,7 +26,7 @@ defmodule ZashiHRWeb.Schema do
     import_fields(:company_queries)
     import_fields(:post_queries)
     import_fields(:resume_queries)
-    import_fields(:user_experience_queries)
+    import_fields(:user_address_queries)
     import_fields(:user_education_queries)
     import_fields(:app_settings_queries)
   end
@@ -38,7 +38,7 @@ defmodule ZashiHRWeb.Schema do
     import_fields(:company_mutations)
     import_fields(:post_mutations)
     import_fields(:resume_mutations)
-    import_fields(:user_experience_mutations)
+    import_fields(:user_address_mutations)
     import_fields(:user_education_mutations)
     import_fields(:app_settings_mutations)
   end

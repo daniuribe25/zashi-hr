@@ -37,14 +37,16 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
   end
 
   @desc "Update user info"
-  input_object :update_user_params, description: "Create user" do
-    field :first_name, non_null(:string), description: "user first name"
-    field :last_name, non_null(:string), description: "user last name"
-    field :email, non_null(:string), description: "user email"
-    field :hire_date, non_null(:date), description: "user hire date on the company"
-    field :position, non_null(:string), description: "user position"
+  input_object :update_user_params, description: "Update user parameters" do
+    field :id, non_null(:id), description: "user first name"
+    field :first_name, :string, description: "user first name"
+    field :last_name, :string, description: "user last name"
+    field :email, :string, description: "user email"
+    field :hire_date, :date, description: "user hire date on the company"
+    field :position, :string, description: "user position"
     field :birth_date, :date, description: "user birth date"
     field :gender, :string, description: "user gender"
+    field :marital_status, :string, description: "user marital status"
   end
 
   @desc "user filter"
@@ -82,7 +84,7 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
       resolve(&UserResolvers.list/3)
     end
 
-    @desc "Get user by id"
+    @desc "Check if user invitation is still valid"
     field :is_user_invitation_valid, :boolean do
       arg(:token, non_null(:string))
 
@@ -100,11 +102,27 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
       resolve(&UserResolvers.create/2)
     end
 
-    @desc "Create new User"
+    @desc "Assign password with invitation token"
     field :set_user_password, type: :user do
       arg(:user, :set_user_password_params)
 
       resolve(&UserResolvers.set_user_password/2)
+    end
+
+    @desc "Resend user invitation"
+    field :send_user_invitation, type: :user do
+      arg(:email, non_null(:string))
+
+      middleware(AuthorizeMiddleware, [:admin, :super_admin])
+      resolve(&UserResolvers.send_user_invitation/2)
+    end
+
+    @desc "Update user info"
+    field :update_user, type: :user do
+      arg(:user, :update_user_params)
+
+      middleware(AuthorizeMiddleware, [:common, :admin, :super_admin])
+      resolve(&UserResolvers.update/2)
     end
   end
 end

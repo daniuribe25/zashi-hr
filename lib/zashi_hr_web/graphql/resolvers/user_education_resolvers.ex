@@ -8,10 +8,6 @@ alias ZashiHR.Services.UserEducations, as: UserEducationServices
     {:ok, UserEducationServices.list_by_filter(filter, order_by, paginate)}
   end
 
-  def by_id(%{id: id}, _info) do
-    {:ok, UserEducationServices.get(id)}
-  end
-
   def create(%{user_education: attrs}, %{context: context}) do
     new_attrs = Map.put(attrs, :user_id, context.current_user.id)
     case UserEducationServices.create(new_attrs) do

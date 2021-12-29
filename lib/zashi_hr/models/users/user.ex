@@ -1,5 +1,7 @@
 defmodule ZashiHR.Models.Users.User do
-  # alias ZashiHR.Models.Users.{UserEducation, UserAddress, UserContact, UserJobLog, UserTimeOffHistory, UserTimeOffRequest}
+  alias ZashiHR.Models.Users.{UserEducation
+    # , UserAddress, UserContact, UserJobLog, UserTimeOffHistory, UserTimeOffRequest
+  }
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -13,13 +15,15 @@ defmodule ZashiHR.Models.Users.User do
     field :birth_date, :date
     field :gender, :string
     field :marital_status, :string
+    field :last_invitation_at, :naive_datetime
     field :active, :boolean, default: true
+    field :role, :string, default: "common"
 
     field :password, :string, virtual: true
 
     # has_one :user_address, UserAddress
     # has_one :user_contact, UserContact
-    # has_many :user_educations, UserEducation
+    has_many :user_educations, UserEducation
     # has_many :user_job_logs, UserJobLog
     # has_many :user_timeoff_history, UserTimeOffHistory
     # has_many :user_time_off_requests, UserTimeOffRequest

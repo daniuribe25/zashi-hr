@@ -3,10 +3,9 @@ defmodule ZashiHR.Models.Users.UserEducation do
   import Ecto.Changeset
 
   schema "user_educations" do
-    field :active, :boolean, default: true
-    field :from, :date
+    field :degree, :string
     field :institution, :string
-    field :title, :string
+    field :from, :date
     field :to, :date
     belongs_to :user, ZashiHR.Models.Users.User
 
@@ -16,7 +15,7 @@ defmodule ZashiHR.Models.Users.UserEducation do
   @doc false
   def changeset(user_education, attrs) do
     user_education
-    |> cast(attrs, [:title, :institution, :from, :to])
-    |> validate_required([:title, :institution, :from, :to])
+    |> cast(attrs, [:degree, :institution, :from, :to])
+    |> validate_required([:degree, :institution, :from, :to])
   end
 end

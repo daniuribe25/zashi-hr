@@ -7,7 +7,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
   @desc "User Education"
   object :user_education do
     field :id, :id, description: "user_education unique identifier"
-    field :title, :string, description: "user education position"
+    field :degree, :string, description: "user education position"
     field :institution, :string, description: "user education company"
     field :from, :date, description: "user education from date"
     field :to, :date, description: "user education to date"
@@ -18,7 +18,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
 
   @desc "user education info to be created"
   input_object :create_user_education_params, description: "Create user education" do
-    field :title, :string, description: "user education title"
+    field :degree, :string, description: "user education degree"
     field :institution, :string, description: "user education institution"
     field :from, :date, description: "user education from date"
     field :to, :date, description: "user education to date"
@@ -27,7 +27,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
   @desc "user education filter"
   input_object :user_education_filters, description: "user_education filter input" do
     field :id, :filter_operators, description: "user education unique identifier"
-    field :title, :filter_operators, description: "user education title"
+    field :degree, :filter_operators, description: "user education degree"
     field :institution, :filter_operators, description: "user education institution"
     field :from, :filter_operators, description: "user education from date"
     field :to, :filter_operators, description: "user education to date"
@@ -38,8 +38,8 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
 
   @desc "user education order"
   input_object :user_education_order, description: "user education sorting input" do
-    field :id, :order_by_operators, description: "user education title"
-    field :title, :order_by_operators, description: "user education base salary"
+    field :id, :order_by_operators, description: "user education degree"
+    field :degree, :order_by_operators, description: "user education base salary"
     field :institution, :order_by_operators, description: "user education max salary"
     field :from, :order_by_operators, description: "user education number of vacants"
     field :to, :order_by_operators, description: "user education number of vacants"
@@ -54,16 +54,8 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
       arg :order_by, :user_education_order
       arg :pagination, :pagination_input
 
-      middleware(AuthorizeMiddleware, [:employer, :admin, :seeker])
+      middleware(AuthorizeMiddleware, [:common])
       resolve &UserEducationResolvers.list/3
-    end
-
-    @desc "Get user education by id"
-    field :user_education_by_id, :user_education do
-      arg(:id, non_null(:id))
-
-      middleware(AuthorizeMiddleware, [:employer, :admin, :seeker])
-      resolve(&UserEducationResolvers.by_id/2)
     end
   end
 
@@ -73,7 +65,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
     field :create_user_education, type: :user_education do
       arg(:user_education, :create_user_education_params)
 
-      middleware(AuthorizeMiddleware, [:seeker, :admin])
+      middleware(AuthorizeMiddleware, [:common])
       resolve(&UserEducationResolvers.create/2)
     end
   end

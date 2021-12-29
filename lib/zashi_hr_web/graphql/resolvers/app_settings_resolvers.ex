@@ -11,7 +11,6 @@ defmodule ZashiHRWeb.Graphql.Resolvers.AppSettings do
     resp = AppSettingsServices.get(app_settings.id)
         |> AppSettingsServices.update(Map.delete(app_settings, :id))
 
-    IO.inspect(resp, label: "APP SETTINGS RESP")
     case resp do
       {:ok, %AppSettings{} = settings} -> {:ok, settings}
       {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
