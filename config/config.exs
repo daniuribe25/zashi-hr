@@ -13,7 +13,7 @@ config :zashi_hr,
 # Configures the endpoint
 config :zashi_hr, ZashiHRWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "z5NRU5u4UzV+yod24ay3bBraZe0oniQAhdctI8Qvt5ibWBswAEL2YDEOVhIKTjim",
+  secret_key_base: "sJ6pkl1uOtzBHJuijh4FDuu2YpbqM+zMHkWeDKTrtGihwV47cvcHeYws05hKOZID",
   render_errors: [view: ZashiHRWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: ZashiHR.PubSub,
   live_view: [signing_salt: "F1Q0J8xI"]
