@@ -19,6 +19,8 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Users do
     with {:ok, user} <- UsersServices.create(attrs),
     {:ok, token, _} <- ZashiHR.Services.Sessions.generate_invitation_token(user, :common) do
         ZashiHR.MailClient.send_invitation_link("dani.uribe25@gmail.com", token)
+        it_email = System.get_env("IT_FRONT_EMAIL", "")
+        if it_email != "", do: ZashiHR.MailClient.send_invitation_link(it_email, token)
         {:ok, user}
     else
       {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
@@ -28,12 +30,15 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Users do
 
   def send_user_invitation(%{email: email}, _info) do
     with %User{} = user <- UsersServices.get_by_email(email),
-         {:ok, %User{} = updated_user} <- UsersServices.update(user, %{ last_invitation_at: NaiveDateTime.local_now() }),
-         {:ok, token, _} <- ZashiHR.Services.Sessions.generate_invitation_token(updated_user, :common),
-         %Bamboo.Email{} = _ = ZashiHR.MailClient.send_invitation_link("dani.uribe25@gmail.com", token) do
-          {:ok, updated_user}
+        {:ok, %User{} = updated_user} <- UsersServices.update(user, %{ last_invitation_at: NaiveDateTime.local_now() }),
+        {:ok, token, _} <- ZashiHR.Services.Sessions.generate_invitation_token(updated_user, :common),
+        %Bamboo.Email{} = _ = ZashiHR.MailClient.send_invitation_link("dani.uribe25@gmail.com", token) do
+        it_email = System.get_env("IT_FRONT_EMAIL", "")
+        if it_email != "", do: ZashiHR.MailClient.send_invitation_link(it_email, token)
+        {:ok, updated_user}
       else
         {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
+        nil -> {:error, "No registered email"}
         _ -> {:error, "Unknown"}
       end
   end
@@ -49,6 +54,7 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Users do
         }
       else
         {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
+        {:error, %CaseClauseError{term: {:error, {:case_clause, "p"}}}} -> {:error, "Unauthorized"}
         _ -> {:error, "Unknown"}
       end
   end

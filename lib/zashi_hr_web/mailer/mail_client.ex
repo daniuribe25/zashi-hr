@@ -5,7 +5,7 @@ defmodule ZashiHR.MailClient do
 
   @invitation_template """
   <h3>Congratulations! You have been invited to join Zashi HR</h3>
-  This is your invitation token <h4 style="color:red">%TOKEN%</h4>
+  This is your invitation <a href="%LINK%" target="_blank">Link</a>
   """
 
   @verification_code_template """
@@ -17,11 +17,12 @@ defmodule ZashiHR.MailClient do
   """
 
   def send_invitation_link(email, token) do
-    body = String.replace(@invitation_template, "%TOKEN%", token)
+    frontend_url = System.get_env("FRONTEND_URL", "")
+    body = String.replace(@invitation_template, "%LINK%", "#{frontend_url}/set_password/#{token}")
 
     Email.new_email()
     |> Email.to(email)
-    |> Email.from("dani.uribe16@gmail.com")
+    |> Email.from(System.get_env("FROM_EMAIL", ""))
     |> Email.subject("Congratulations! You have been invited to join Zashi HR")
     |> Email.html_body(body)
     |> Mailer.deliver_later()
