@@ -8,7 +8,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
   object :user_education do
     field :id, :id, description: "user_education unique identifier"
     field :degree, :string, description: "user education position"
-    field :institution, :string, description: "user education company"
+    field :institution, :string, description: "user education institution"
     field :from, :date, description: "user education from date"
     field :to, :date, description: "user education to date"
     field :user_id, :integer, description: "user owner id"

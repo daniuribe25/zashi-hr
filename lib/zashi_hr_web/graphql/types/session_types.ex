@@ -38,7 +38,7 @@ defmodule ZashiHRWeb.Graphql.Types.Sessions do
       resolve(&SessionResolvers.authenticate/2)
     end
 
-    @desc "Authenticate User"
+    @desc "Authenticate Admin"
     field :authenticate_admin, type: :admin_session do
       arg(:credentials, :authenticate_input)
 

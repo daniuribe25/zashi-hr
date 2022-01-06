@@ -16,7 +16,7 @@ defmodule ZashiHRWeb.Graphql.Types.Resumes do
     field :country, :string, description: "resume user country"
     field :desired_salary, :integer, description: "user desired salary"
     field :desired_job_title, :string, description: "user desired job title"
-    field :user_id, :integer, description: "company owner id"
+    field :user_id, :integer, description: "user owner id"
     field :user, :user, resolve: dataloader(:user)
     field :inserted_at, :string, description: "time that resume was inserted"
   end

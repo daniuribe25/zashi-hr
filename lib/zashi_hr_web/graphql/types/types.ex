@@ -3,7 +3,7 @@ defmodule ZashiHRWeb.Graphql.Types do
 
   import_types Absinthe.Type.Custom
   import_types(ZashiHRWeb.Graphql.Types.{
-    Sessions, Users, AdminUsers, Companies, Posts, Resumes, UserAddress, UserEducation, AppSettings
+    Sessions, Users, AdminUsers, Resumes, UserAddress, UserEducation, AppSettings
   })
 
   @desc "query filter operators"
