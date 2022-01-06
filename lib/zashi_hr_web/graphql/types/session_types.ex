@@ -23,7 +23,7 @@ defmodule ZashiHRWeb.Graphql.Types.Sessions do
 
   # QUERIES
   object :session_queries do
-    @desc "Get own User or Company information by logged token"
+    @desc "Get own User information by logged token"
     field :get_own_info, :session do
       resolve(&SessionResolvers.get_own/2)
     end

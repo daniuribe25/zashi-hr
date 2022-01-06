@@ -1,7 +1,6 @@
 defmodule ZashiHRWeb.Graphql.Resolvers.Session do
   alias ZashiHR.Services.Sessions, as: SessionsServices
   alias ZashiHR.Services.Users, as: UsersServices
-  alias ZashiHR.Services.Companies, as: CompanyServices
 
   def authenticate(%{credentials: credentials}, _info) do
     case SessionsServices.authenticate(credentials, :common) do
