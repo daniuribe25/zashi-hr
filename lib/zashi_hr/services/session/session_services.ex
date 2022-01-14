@@ -21,8 +21,8 @@ defmodule ZashiHR.Services.Sessions do
   defp checkpw(user, password), do: Bcrypt.check_pass(user, password)
 
   defp generate_token(user, type),
-    do: ZashiHR.Middlewares.Guardian.encode_and_sign(user, %{ type: type })
+    do: ZashiHR.Middlewares.Guardian.encode_and_sign(user, %{ type: type }, ttl: {12, :hours})
 
   def generate_invitation_token(user, type),
-    do: ZashiHR.Middlewares.Guardian.encode_and_sign(user, %{ type: type })
+    do: ZashiHR.Middlewares.Guardian.encode_and_sign(user, %{ type: type }, ttl: {12, :hours})
 end

@@ -29,7 +29,7 @@ config :phoenix, :json_library, Jason
 # Guardian config details
 config :zashi_hr, ZashiHR.Middlewares.Guardian,
   issuer: "zashi_hr",
-  secret_key: "g0S9+X2sETO26JsS/CZ6okYeeI0BqQd46zw5FlDWyQzMuYbRrHzWzX9wKGGiiBah"
+  secret_key: System.get_env("JWT_SECRET", "")
 
 config :zashi_hr, ZashiHR.Mailer,
   adapter: Bamboo.SendgridAdapter,
