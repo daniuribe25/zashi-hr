@@ -5,6 +5,7 @@ defmodule ZashiHR.Models.Settings.AppSettings do
   schema "app_settings" do
     field :name, :string
     field :value, :string
+    field :type, :string
     field :description, :string
     field :active, :boolean, default: true
 

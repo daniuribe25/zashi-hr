@@ -7,6 +7,7 @@ defmodule ZashiHRWeb.Graphql.Types.AppSettings do
   object :app_settings do
     field :id, :id, description: "app settings unique identifier"
     field :name, :string, description: "app settings name"
+    field :type, :string, description: "app settings value type"
     field :value, :string, description: "app settings value"
     field :description, :string, description: "app settings description"
   end
