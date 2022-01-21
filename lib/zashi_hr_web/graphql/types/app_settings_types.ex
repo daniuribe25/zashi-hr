@@ -38,8 +38,8 @@ defmodule ZashiHRWeb.Graphql.Types.AppSettings do
   # MUTATIONS
   object :app_settings_mutations do
     @desc "Update one of the app settings"
-    field :update_app_settings, type: :app_settings do
-      arg(:app_settings, non_null(:app_settings_params))
+    field :update_app_settings, type: :boolean do
+      arg(:app_settings, list_of(:app_settings_params))
 
       middleware(AuthorizeMiddleware, [:admin, :super_admin])
       resolve &AppSettingsResolvers.update/2

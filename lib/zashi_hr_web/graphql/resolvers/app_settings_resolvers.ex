@@ -8,13 +8,10 @@ defmodule ZashiHRWeb.Graphql.Resolvers.AppSettings do
   end
 
   def update(%{app_settings: app_settings}, _) do
-    resp = AppSettingsServices.get(app_settings.id)
-        |> AppSettingsServices.update(Map.delete(app_settings, :id))
-
-    case resp do
-      {:ok, %AppSettings{} = settings} -> {:ok, settings}
-      {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
-       _ -> {:error, "Unknown"}
-    end
+    Enum.each(app_settings, fn app_s ->
+      AppSettingsServices.get(app_s.id)
+      |> AppSettingsServices.update(Map.delete(app_s, :id))
+    end)
+    {:ok, true}
   end
 end
