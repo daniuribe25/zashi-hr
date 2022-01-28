@@ -10,7 +10,10 @@ defmodule ZashiHRWeb.Graphql.Types.Resumes do
     field :resume_url, :string, description: "resume url"
     field :photo_url, :string, description: "resume user photo"
     field :category, list_of(:string), description: "resume user job category"
-    field :job_type, list_of(:job_types), description: "resume job type (partime - fulltime - intern)"
+
+    field :job_type, list_of(:job_types),
+      description: "resume job type (partime - fulltime - intern)"
+
     field :summary, :string, description: "resume summary"
     field :city, :string, description: "resume user city"
     field :country, :string, description: "resume user country"
@@ -25,7 +28,10 @@ defmodule ZashiHRWeb.Graphql.Types.Resumes do
   input_object :create_resume_params, description: "Create resume" do
     field :resume_url, :string, description: "resume url"
     field :photo_url, :string, description: "resume user photo"
-    field :job_type, list_of(:job_types), description: "resume job type (partime - fulltime - intern)"
+
+    field :job_type, list_of(:job_types),
+      description: "resume job type (partime - fulltime - intern)"
+
     field :summary, :string, description: "resume summary"
     field :category, list_of(:string), description: "resume user job categories"
     field :city, :string, description: "resume user city"
@@ -39,7 +45,10 @@ defmodule ZashiHRWeb.Graphql.Types.Resumes do
   input_object :resume_filters, description: "resume filter input" do
     field :resume_url, :filter_operators, description: "resume url"
     field :photo_url, :filter_operators, description: "resume user photo"
-    field :job_type, :filter_operators, description: "resume job type (partime - fulltime - intern)"
+
+    field :job_type, :filter_operators,
+      description: "resume job type (partime - fulltime - intern)"
+
     field :summary, :filter_operators, description: "resume summary"
     field :category, :filter_operators, description: "resume user job categories"
     field :city, :filter_operators, description: "resume user city"
@@ -63,12 +72,12 @@ defmodule ZashiHRWeb.Graphql.Types.Resumes do
   object :resume_queries do
     @desc "Get all the resumes"
     field :resumes, list_of(:resume) do
-      arg :filter, :resume_filters
-      arg :order_by, :resumes_order
-      arg :pagination, :pagination_input
+      arg(:filter, :resume_filters)
+      arg(:order_by, :resumes_order)
+      arg(:pagination, :pagination_input)
 
       middleware(AuthorizeMiddleware, [:employer, :admin, :seeker])
-      resolve &ResumeResolvers.list/3
+      resolve(&ResumeResolvers.list/3)
     end
 
     @desc "Get resume by id"

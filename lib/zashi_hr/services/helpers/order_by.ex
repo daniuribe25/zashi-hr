@@ -6,9 +6,8 @@ defmodule ZashiHR.Services.Helpers.OrderBy do
       Map.keys(order_by)
       |> Enum.reduce(%{}, fn key, list ->
         Map.put(list, String.to_atom(String.downcase(order_by[key].order)), key)
-    end)
+      end)
+
     from query, order_by: ^Map.to_list(sort_by_list)
   end
-
-
 end

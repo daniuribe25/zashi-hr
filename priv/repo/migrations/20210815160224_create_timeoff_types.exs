@@ -9,6 +9,5 @@ defmodule ZashiHR.Repo.Migrations.CreateTimeOffTypes do
 
       timestamps()
     end
-
   end
 end

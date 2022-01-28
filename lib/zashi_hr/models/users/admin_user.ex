@@ -21,12 +21,18 @@ defmodule ZashiHR.Models.Users.AdminUser do
     |> cast(attrs, [:email, :first_name, :last_name, :password])
     |> validate_required([:email, :first_name, :last_name, :password], message: "is required")
     |> update_change(:email, &String.downcase(&1))
-    |> validate_format(:email, ~r/^[\w.!#$%&’*+\-\/=?\^`{|}~]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/i, message: "invalid")
+    |> validate_format(:email, ~r/^[\w.!#$%&’*+\-\/=?\^`{|}~]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*$/i,
+      message: "invalid"
+    )
     |> unique_constraint(:email, name: :users_unique_email_index, message: "already registered")
-    |> validate_length(:password, min: 6, max: 20, message: " should have between 6 and 20 characters")
+    |> validate_length(:password,
+      min: 6,
+      max: 20,
+      message: " should have between 6 and 20 characters"
+    )
     |> validate_format(:password, ~r/^(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*[0-9].*)[a-zA-Z0-9]{6,20}$/,
       message:
-      "should contains at least an uppercase letter, a downcase letter, at least one number, and a special character"
+        "should contains at least an uppercase letter, a downcase letter, at least one number, and a special character"
     )
     |> hash_password
   end

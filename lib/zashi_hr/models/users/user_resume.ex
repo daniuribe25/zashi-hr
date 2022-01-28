@@ -22,7 +22,17 @@ defmodule ZashiHR.Models.Users.UserResume do
   @doc false
   def changeset(user_resume, attrs) do
     user_resume
-    |> cast(attrs, [:resume_url, :photo_url, :job_type, :category, :summary, :city, :country, :desired_salary, :desired_job_title])
+    |> cast(attrs, [
+      :resume_url,
+      :photo_url,
+      :job_type,
+      :category,
+      :summary,
+      :city,
+      :country,
+      :desired_salary,
+      :desired_job_title
+    ])
     |> validate_required([:job_type, :category, :summary, :desired_salary, :desired_job_title])
   end
 end

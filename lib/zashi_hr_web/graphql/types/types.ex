@@ -1,9 +1,17 @@
 defmodule ZashiHRWeb.Graphql.Types do
   use Absinthe.Schema.Notation
 
-  import_types Absinthe.Type.Custom
+  import_types(Absinthe.Type.Custom)
+
   import_types(ZashiHRWeb.Graphql.Types.{
-    Sessions, Users, AdminUsers, Resumes, UserAddress, UserContact, UserEducation, AppSettings
+    Sessions,
+    Users,
+    AdminUsers,
+    Resumes,
+    UserAddress,
+    UserContact,
+    UserEducation,
+    AppSettings
   })
 
   @desc "query filter operators"
@@ -28,20 +36,20 @@ defmodule ZashiHRWeb.Graphql.Types do
   # TYPES
   @desc "job types"
   enum :job_types do
-    value :fulltime, as: "FULLTIME"
-    value :parttime, as: "PARTTIME"
-    value :intern, as: "INTERN"
+    value(:fulltime, as: "FULLTIME")
+    value(:parttime, as: "PARTTIME")
+    value(:intern, as: "INTERN")
   end
 
   @desc "salary frequancy"
   enum :salary_frequency do
-    value :monthly, as: "monthly"
-    value :yearly, as: "yearly"
+    value(:monthly, as: "monthly")
+    value(:yearly, as: "yearly")
   end
 
   @desc "job types"
   enum :order_types do
-    value :asc, as: "ASC"
-    value :desc, as: "DESC"
+    value(:asc, as: "ASC")
+    value(:desc, as: "DESC")
   end
 end

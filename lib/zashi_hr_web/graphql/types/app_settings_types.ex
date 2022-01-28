@@ -29,9 +29,9 @@ defmodule ZashiHRWeb.Graphql.Types.AppSettings do
   object :app_settings_queries do
     @desc "Get all app settings"
     field :app_settings, list_of(:app_settings) do
-      arg :filter, :app_settings_filters
+      arg(:filter, :app_settings_filters)
 
-      resolve &AppSettingsResolvers.list/3
+      resolve(&AppSettingsResolvers.list/3)
     end
   end
 
@@ -42,7 +42,7 @@ defmodule ZashiHRWeb.Graphql.Types.AppSettings do
       arg(:app_settings, list_of(:app_settings_params))
 
       middleware(AuthorizeMiddleware, [:admin, :super_admin])
-      resolve &AppSettingsResolvers.update/2
+      resolve(&AppSettingsResolvers.update/2)
     end
   end
 end

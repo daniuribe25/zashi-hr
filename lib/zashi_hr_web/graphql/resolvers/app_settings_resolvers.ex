@@ -12,6 +12,7 @@ defmodule ZashiHRWeb.Graphql.Resolvers.AppSettings do
       AppSettingsServices.get(app_s.id)
       |> AppSettingsServices.update(Map.delete(app_s, :id))
     end)
+
     {:ok, true}
   end
 end

@@ -34,7 +34,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserContact do
     @desc "Get user contact information"
     field :user_contact, :user_contact do
       middleware(AuthorizeMiddleware, [:common])
-      resolve &UserContactResolvers.get/3
+      resolve(&UserContactResolvers.get/3)
     end
   end
 

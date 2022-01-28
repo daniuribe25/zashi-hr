@@ -16,13 +16,16 @@ defmodule ZashiHRWeb.Graphql.Resolvers.Session do
     end
   end
 
-  def get_own(_params, %{ context: context }) do
+  def get_own(_params, %{context: context}) do
     case Map.has_key?(context, :current_user) do
-      true -> case context.current_user.role do
-        "common" -> {:ok, %{ :user => UsersServices.get(context.current_user.id) }}
-        _ -> {:error, "Unknown"}
-      end
-      _ -> {:error, "Unknown"}
+      true ->
+        case context.current_user.role do
+          "common" -> {:ok, %{:user => UsersServices.get(context.current_user.id)}}
+          _ -> {:error, "Unknown"}
+        end
+
+      _ ->
+        {:error, "Unknown"}
     end
   end
 end

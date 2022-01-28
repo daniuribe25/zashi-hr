@@ -1,5 +1,4 @@
 defmodule ZashiHR.MailClient do
-
   alias Bamboo.Email
   alias ZashiHR.Mailer
 

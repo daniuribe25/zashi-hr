@@ -80,9 +80,9 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
   object :user_queries do
     @desc "Get all the users"
     field :users, list_of(:user) do
-      arg :filter, :user_filters
-      arg :order_by, :user_order
-      arg :pagination, :pagination_input
+      arg(:filter, :user_filters)
+      arg(:order_by, :user_order)
+      arg(:pagination, :pagination_input)
 
       # middleware(AuthorizeMiddleware, [:admin])
       resolve(&UserResolvers.list/3)

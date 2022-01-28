@@ -18,6 +18,14 @@ defmodule ZashiHR.Models.Users.UserContact do
   @doc false
   def changeset(user_contact, attrs) do
     user_contact
-    |> cast(attrs, [:work_phone, :mobile_phone, :home_phone, :personal_email, :linkedin, :twitter, :facebook])
+    |> cast(attrs, [
+      :work_phone,
+      :mobile_phone,
+      :home_phone,
+      :personal_email,
+      :linkedin,
+      :twitter,
+      :facebook
+    ])
   end
 end

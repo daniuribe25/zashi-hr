@@ -8,7 +8,6 @@ defmodule ZashiHR.Services.UserEducations do
   alias ZashiHR.Models.Users.UserEducation
   alias ZashiHR.Services.Helpers.{Queries, OrderBy, Pagination}
 
-
   @spec data :: Dataloader.Ecto.t()
   def data(), do: Dataloader.Ecto.new(ZashiHR.Repo, query: &query/2)
   def query(queryable, _params), do: queryable

@@ -60,18 +60,18 @@ defmodule ZashiHRWeb.Graphql.Types.UserAddress do
   object :user_address_queries do
     @desc "Get all the user addresss"
     field :list_user_addresses, list_of(:user_address) do
-      arg :filter, :user_address_filters
-      arg :order_by, :user_address_order
-      arg :pagination, :pagination_input
+      arg(:filter, :user_address_filters)
+      arg(:order_by, :user_address_order)
+      arg(:pagination, :pagination_input)
 
       middleware(AuthorizeMiddleware, [:admin])
-      resolve &UserAddressResolvers.list/3
+      resolve(&UserAddressResolvers.list/3)
     end
 
     @desc "Get all the user addresss"
     field :user_address, :user_address do
       middleware(AuthorizeMiddleware, [:common])
-      resolve &UserAddressResolvers.get/3
+      resolve(&UserAddressResolvers.get/3)
     end
   end
 

@@ -15,12 +15,9 @@ defmodule ZashiHRWeb.Router do
     forward "/graphql", Absinthe.Plug, schema: ZashiHRWeb.Schema
 
     # if Mix.env() in [:dev, :test] do
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
-      schema: ZashiHRWeb.Schema
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: ZashiHRWeb.Schema
     # end
   end
-
-
 
   # Enables LiveDashboard only for development
   #
@@ -36,9 +33,5 @@ defmodule ZashiHRWeb.Router do
       pipe_through [:fetch_session, :protect_from_forgery]
       live_dashboard "/dashboard", metrics: ZashiHRWeb.Telemetry
     end
-
-
   end
-
-
 end

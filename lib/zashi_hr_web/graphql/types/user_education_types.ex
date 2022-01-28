@@ -50,12 +50,12 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
   object :user_education_queries do
     @desc "Get all the user educations"
     field :user_educations, list_of(:user_education) do
-      arg :filter, :user_education_filters
-      arg :order_by, :user_education_order
-      arg :pagination, :pagination_input
+      arg(:filter, :user_education_filters)
+      arg(:order_by, :user_education_order)
+      arg(:pagination, :pagination_input)
 
       middleware(AuthorizeMiddleware, [:common])
-      resolve &UserEducationResolvers.list_own/3
+      resolve(&UserEducationResolvers.list_own/3)
     end
   end
 

@@ -66,14 +66,13 @@ defmodule ZashiHRWeb.Graphql.Types.AdminUsers do
   object :admin_user_queries do
     @desc "Get all the users"
     field :admin_users, list_of(:admin_user) do
-      arg :filter, :user_filters
-      arg :order_by, :user_order
-      arg :pagination, :pagination_input
+      arg(:filter, :user_filters)
+      arg(:order_by, :user_order)
+      arg(:pagination, :pagination_input)
 
       # middleware(AuthorizeMiddleware, [:admin])
       resolve(&UserResolvers.list/3)
     end
-
   end
 
   # MUTATIONS
