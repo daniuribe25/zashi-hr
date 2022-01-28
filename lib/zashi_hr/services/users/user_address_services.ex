@@ -8,6 +8,10 @@ defmodule ZashiHR.Services.UserAddresses do
   alias ZashiHR.Models.Users.UserAddress
   alias ZashiHR.Services.Helpers.{Queries, OrderBy, Pagination}
 
+  @spec data :: Dataloader.Ecto.t()
+  def data(), do: Dataloader.Ecto.new(ZashiHR.Repo, query: &query/2)
+  def query(queryable, _params), do: queryable
+
   def list_by_filter(filter, order_by, pagination) do
     query = from ued in UserAddress, as: :user_address
     date_list = [:from, :to]

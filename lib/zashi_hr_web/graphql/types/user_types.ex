@@ -2,6 +2,7 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
   use Absinthe.Schema.Notation
   alias ZashiHRWeb.Graphql.Resolvers.Users, as: UserResolvers
   alias ZashiHR.Middlewares.Authorize, as: AuthorizeMiddleware
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
 
   # TYPES
   @desc "Platform user definition"
@@ -16,6 +17,8 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
     field :gender, :string, description: "user gender"
     field :marital_status, :string, description: "user marital status"
     field :inserted_at, :string, description: "time that user was inserted"
+    field :user_contact, :user_contact, resolve: dataloader(:user_contact)
+    field :user_address, :user_address, resolve: dataloader(:user_address)
   end
 
   @desc "User info to be created"

@@ -1,7 +1,7 @@
 defmodule ZashiHRWeb.Schema do
   use Absinthe.Schema
   alias ZashiHR.Middlewares.ErrorHandler
-  alias ZashiHR.Services.{Users}
+  alias ZashiHR.Services.{Users, UserContacts, UserAddresses}
 
   import_types(ZashiHRWeb.Graphql.Types)
 
@@ -9,6 +9,8 @@ defmodule ZashiHRWeb.Schema do
     loader =
       Dataloader.new()
       |> Dataloader.add_source(:user, Users.data())
+      |> Dataloader.add_source(:user_contact, UserContacts.data())
+      |> Dataloader.add_source(:user_address, UserAddresses.data())
 
     Map.put(ctx, :loader, loader)
   end
@@ -23,6 +25,7 @@ defmodule ZashiHRWeb.Schema do
     import_fields(:admin_user_queries)
     import_fields(:resume_queries)
     import_fields(:user_address_queries)
+    import_fields(:user_contact_queries)
     import_fields(:user_education_queries)
     import_fields(:app_settings_queries)
   end
@@ -33,6 +36,7 @@ defmodule ZashiHRWeb.Schema do
     import_fields(:admin_user_mutations)
     import_fields(:resume_mutations)
     import_fields(:user_address_mutations)
+    import_fields(:user_contact_mutations)
     import_fields(:user_education_mutations)
     import_fields(:app_settings_mutations)
   end
