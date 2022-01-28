@@ -23,6 +23,8 @@ defmodule ZashiHR.Services.UserAddresses do
 
   def get(id), do: Repo.get(UserAddress, id)
 
+  def get_by_user_id(user_id), do: Repo.get_by(UserAddress, user_id: user_id)
+
   def create(attrs \\ %{}) do
     %UserAddress{}
     |> Ecto.Changeset.change(attrs)

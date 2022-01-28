@@ -28,6 +28,16 @@ defmodule ZashiHRWeb.Graphql.Types.UserAddress do
     field :country, non_null(:string), description: "user address country"
   end
 
+  @desc "user address info to be created"
+  input_object :update_user_address_params, description: "Update user address" do
+    field :main, :string, description: "user address main"
+    field :secondary, :string, description: "user address secondary"
+    field :city, :string, description: "user address city"
+    field :state, :string, description: "user address state"
+    field :zip_code, :string, description: "user address zip code"
+    field :country, :string, description: "user address country"
+  end
+
   @desc "user address filter"
   input_object :user_address_filters, description: "user_address filter input" do
     field :id, :filter_operators, description: "user address unique identifier"
@@ -49,13 +59,19 @@ defmodule ZashiHRWeb.Graphql.Types.UserAddress do
   # QUERIES
   object :user_address_queries do
     @desc "Get all the user addresss"
-    field :user_addresss, list_of(:user_address) do
+    field :list_user_addresses, list_of(:user_address) do
       arg :filter, :user_address_filters
       arg :order_by, :user_address_order
       arg :pagination, :pagination_input
 
-      middleware(AuthorizeMiddleware, [:common])
+      middleware(AuthorizeMiddleware, [:admin])
       resolve &UserAddressResolvers.list/3
+    end
+
+    @desc "Get all the user addresss"
+    field :user_address, :user_address do
+      middleware(AuthorizeMiddleware, [:common])
+      resolve &UserAddressResolvers.get/3
     end
   end
 
@@ -67,6 +83,14 @@ defmodule ZashiHRWeb.Graphql.Types.UserAddress do
 
       middleware(AuthorizeMiddleware, [:common])
       resolve(&UserAddressResolvers.create/2)
+    end
+
+    @desc "Update User Address"
+    field :update_user_address, type: :user_address do
+      arg(:user_address, :update_user_address_params)
+
+      middleware(AuthorizeMiddleware, [:common])
+      resolve(&UserAddressResolvers.update/2)
     end
   end
 end

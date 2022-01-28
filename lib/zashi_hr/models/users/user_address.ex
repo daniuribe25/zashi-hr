@@ -17,7 +17,7 @@ defmodule ZashiHR.Models.Users.UserAddress do
   @doc false
   def changeset(user_address, attrs) do
     user_address
-    |> cast(attrs, [:degree, :institution, :from, :to])
-    |> validate_required([:degree, :institution, :from, :to])
+    |> cast(attrs, [:main, :secondary, :city, :state, :zip_code, :country])
+    |> validate_required([:main, :city, :state, :country])
   end
 end
