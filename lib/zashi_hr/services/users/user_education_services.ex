@@ -8,6 +8,11 @@ defmodule ZashiHR.Services.UserEducations do
   alias ZashiHR.Models.Users.UserEducation
   alias ZashiHR.Services.Helpers.{Queries, OrderBy, Pagination}
 
+
+  @spec data :: Dataloader.Ecto.t()
+  def data(), do: Dataloader.Ecto.new(ZashiHR.Repo, query: &query/2)
+  def query(queryable, _params), do: queryable
+
   def list_by_filter(filter, order_by, pagination) do
     query = from ued in UserEducation, as: :user_education
     date_list = [:from, :to]

@@ -19,6 +19,7 @@ defmodule ZashiHRWeb.Graphql.Types.Users do
     field :inserted_at, :string, description: "time that user was inserted"
     field :user_contact, :user_contact, resolve: dataloader(:user_contact)
     field :user_address, :user_address, resolve: dataloader(:user_address)
+    field :user_educations, list_of(:user_education), resolve: dataloader(:user_educations)
   end
 
   @desc "User info to be created"

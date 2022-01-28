@@ -55,7 +55,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserEducation do
       arg :pagination, :pagination_input
 
       middleware(AuthorizeMiddleware, [:common])
-      resolve &UserEducationResolvers.list/3
+      resolve &UserEducationResolvers.list_own/3
     end
   end
 
