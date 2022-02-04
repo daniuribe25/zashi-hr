@@ -13,7 +13,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserContact do
     field :personal_email, :string, description: "user personal email"
     field :linkedin, :string, description: "user linkedin"
     field :twitter, :string, description: "user twitter"
-    field :facebook, :integer, description: "user facebook"
+    field :facebook, :string, description: "user facebook"
     field :user, :user, resolve: dataloader(:user)
     field :inserted_at, :string, description: "time that user contact was inserted"
   end
@@ -26,7 +26,7 @@ defmodule ZashiHRWeb.Graphql.Types.UserContact do
     field :personal_email, :string, description: "user personal email"
     field :linkedin, :string, description: "user linkedin"
     field :twitter, :string, description: "user twitter"
-    field :facebook, :integer, description: "user facebook"
+    field :facebook, :string, description: "user facebook"
   end
 
   # QUERIES
